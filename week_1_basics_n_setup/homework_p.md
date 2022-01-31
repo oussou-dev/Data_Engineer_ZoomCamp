@@ -286,7 +286,7 @@ wget https://s3.amazonaws.com/nyc-tlc/misc/taxi+_zone_lookup.csv
 
 
 
-Download this data and put it to Postgres
+> Download this data and put it to Postgres
 
 
 ## Question 3. Count records 
