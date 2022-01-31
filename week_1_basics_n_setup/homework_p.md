@@ -225,7 +225,7 @@ google_storage_bucket.data-lake-bucket: Creation complete after 2s [id=dtc_data_
 Run Postgres and load data as shown in the videos
 
 > **CMD**  
-docker-compose up
+docker-compose up -d
 
 
 We'll use the yellow taxi trips from January 2021:
@@ -239,6 +239,52 @@ You will also need the dataset with zones:
 ```bash 
 wget https://s3.amazonaws.com/nyc-tlc/misc/taxi+_zone_lookup.csv
 ```
+
+> **CMD**
+```
+# Create a new ingest script that ingests both files called ingest_data.py, then dockerize it with
+
+> docker build -t taxi_ingest:homework .
+
+# Now find the network where the docker-compose containers are running with
+
+> docker network ls
+
+# Finally, run the dockerized script
+```
+
+```
+> URL="https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2021-01.csv"
+
+> docker run -it \
+    --network=2_docker_sql_default \
+    taxi_ingest:homework \
+    --user=root \
+    --password=root \
+    --host=pgdatabase \
+    --port=5432 \
+    --db=ny_taxi \
+    --table_name=trips \
+    --url=${URL}
+```
+
+
+```
+> URL="https://s3.amazonaws.com/nyc-tlc/misc/taxi+_zone_lookup.csv"
+
+> docker run -it \
+    --network=2_docker_sql_default \
+    taxi_ingest:homework \
+    --user=root \
+    --password=root \
+    --host=pgdatabase \
+    --port=5432 \
+    --db=ny_taxi \
+    --table_name=zones \
+    --url=${URL}
+```
+
+
 
 Download this data and put it to Postgres
 
