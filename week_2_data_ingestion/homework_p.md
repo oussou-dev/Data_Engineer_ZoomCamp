@@ -39,9 +39,9 @@ What should be the start date for this dag?
 How often do we need to run this DAG?
 
 * Daily
-* Monthly
+* > **Monthly**
 * Yearly
-* > **Once**
+* Once
 
 
 ## Re-running the DAGs for past dates
