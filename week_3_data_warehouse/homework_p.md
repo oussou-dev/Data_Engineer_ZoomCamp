@@ -66,9 +66,9 @@ FROM `dtc-de-course-339214.trips_data_all.fhv_tripdata_clustered`
 WHERE DATE(pickup_datetime) BETWEEN "2019-01-01" AND "2019-03-31"
 AND dispatching_base_num IN ('B00987','B02060','B02279');
 ```
->->> Count:          **~ 26658**  
->->> Estimated data: **~ 400MB**  
->->> Processed data: **~ 155MB**  
+>->> Count:          **~26658**  
+>->> Estimated data: **~400MB**  
+>->> Processed data: **~155MB**  
 
 
 ### Question 5: 
