@@ -44,7 +44,7 @@ performance and reduce cost.
 > **answer**  
 
 >->> **Partition by dropoff_datetime**   
->->> **Cluster by dispatching_base_num**  
+>->> **and Cluster by dispatching_base_num**  
 
 <br><br>
 
