@@ -30,6 +30,7 @@ SELECT count(*)
 FROM dtc-de-course-339214.production.fact_trips
 WHERE EXTRACT(YEAR FROM pickup_datetime) IN  (2019, 2020)
 ```
+
 >->> **~ 61635151** 
 
 
@@ -98,5 +99,6 @@ Create a dashboard with some tiles that you find interesting to explore the data
 ![image](https://github.com/oussou-dev/Data_Engineer_ZoomCamp/blob/main/week_4_analytics_engineering/img/tile.png)
 
 <br>
+
 >->> **January** 
 
