@@ -84,7 +84,9 @@ In the dataset you'll find information about businesses across 11 metropolitan a
 
 
 - Creation of Dataflow Batch Job and Execution
-  - 
+  -  Check `scripts/dataflow_batch_test.py`: It reads JSON encoded messages from GCS file, transforms the message data and writes the results to BigQuery
+  -  run dataflow batch job from CLI:
+    `python3 scripts/dataflow_batch_test.py --input_path=gs://gcs-bucket-yelp/data/* --table=test.business --error_table=test.error --runner DataflowRunner --project yelp-zoomcamp-de --region us-west1 --service_account_email unegouttedeweb@gmail.com --staging_location gs://gcs-bucket-yelp/dataflow/staging --temp_location gs://gcs-bucket-yelp/dataflow/temp --job_name test-batch-bq --num_workers 1 --max_num_workers 4`
 
 
 <br>
@@ -118,10 +120,7 @@ In the dataset you'll find information about businesses across 11 metropolitan a
   -  Get credentials, in CLI: `gloud config list`
   -  Set credentials: export GOOGLE_APPLICATION_CREDENTIALS="/home/ubuntu/z_vscode_p/Data_Engineer_ZoomCamp/week_7_project/credentials/yelp-zoomcamp-de-83864d05c153.json"
   -  run dataflow stream job from CLI:   
-        `python3 scripts/dataflow_stream.py --input_subscription=projects/yelp-zoomcamp-de/subscriptions/gcp-topic-yelp-sub --output_table=test.yelp_covid -- output_error_table=test.error --runner DataflowRunner --project yelp-zoomcamp-de --region
-        us-west1 --service_account_email unegouttedeweb@gmail.com --
-        staging_location gs://gcp-file-source/dataflow/staging --temp_location gs://gcp-file-
-        source/dataflow/temp --job_name test-stream-bq --num_workers 1 --max_num_workers 2`
+        `python3 scripts/dataflow_stream.py --input_subscription=projects/yelp-zoomcamp-de/subscriptions/gcp-topic-yelp-sub --output_table=test.yelp_covid --output_error_table=test.error --runner DataflowRunner --project yelp-zoomcamp-de --region us-west1 --service_account_email unegouttedeweb@gmail.com --staging_location gs://gcs-bucket-yelp/dataflow/staging --temp_location gs://gcs-bucket-yelp/dataflow/temp --job_name test-stream-bq --num_workers 1 --max_num_workers 2`
 
 <br><br>
 ## **Transformations**
