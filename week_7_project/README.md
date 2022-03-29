@@ -53,7 +53,7 @@ In the dataset you'll find information about businesses across 11 metropolitan a
   - Create `keys` for new service account
     - Select the new service account
     - Click on `KEYS` option
-    - Create a `new key` with key type `JSON` and save it 
+    - Create a `new key` with key type `JSON` and save it (`credentials` folder)
   - Install and setting of Cloud SDK -> [link](https://cloud.google.com/sdk/docs/install?hl=en)
 
 <br><br>
@@ -62,8 +62,10 @@ In the dataset you'll find information about businesses across 11 metropolitan a
 
 ### **Batch / Workflow orchestration**
 
-- Downloading Yelp Dataset -> [link](https://www.yelp.com/dataset/download)
-  
+- Downloading Yelp Dataset (in folder `yelp_dataset`)  -> links:
+  - [yelp_academic_dataset_business](https://www.yelp.com/dataset/download)
+  - [yelp_academic_dataset_covid_features](https://www.dropbox.com/s/y6ac1lpu7ayezlj/yelp_academic_dataset_covid_features.json)
+  - via CLI check nb of lines(go to `yelp_dataset` folder):  `cat yelp_academic_dataset_covid_features.json | wc -l`
 
 ~~~
 (look snapshots folders img/2_gcs_bucket)
@@ -77,7 +79,7 @@ In the dataset you'll find information about businesses across 11 metropolitan a
 
 - and transferring data to Cloud bucket
   - via web interface : `gcs-bucket-yelp` -> `CREATE FOLDER` (name: data)-> `UPLOAD FILES` 
-  - via CLI : (in `yelp_dataset` folder) `gsutil cp  yelp_academic_dataset_business.json gs://gcs-bucket-yelp/data/`
+  - via CLI : (in `yelp_dataset` folder) `gsutil cp  yelp_academic_dataset_business.json gs://gcs-bucket-yelp/data/` or `gsutil cp *.json gs://gcs-bucket-yelp/data/`
 
 
 
@@ -98,17 +100,28 @@ In the dataset you'll find information about businesses across 11 metropolitan a
   - Enable `Cloud Pub/Sub API` first
   - Create  `NEW TOPIC` in `Cloud Pub/Sub` via web interface
   - Complete `python3 scripts/publish_messages.py`
+  - Get credentials, in CLI: `gloud config list`
   - Complete `config/publish_config.ini`
-  - 
-
 
 - and publishing messages (to the topic)
+  - run `pip3 install --upgrade google-auth --upgrade protobuf`
   - run `python3 scripts/publish_messages.py --config_path=config/publish_config.ini`
+  - check:
+    - in CLI: `cat yelp_dataset/yelp_academic_dataset_covid_features.json | wc -l` => 209795
+    - in web interface: `Cloud Pub/Sub` -> `gcp-topic-yelp` -> `SUBSCRIPTIONS` -> `gcp-topic-yelp-sub` -> `OVERVIEW` => Unacked message count = 209795
+    - in web interface: `Cloud Pub/Sub` -> `gcp-topic-yelp` -> `SUBSCRIPTIONS` -> `gcp-topic-yelp-sub` -> `MESSAGES` click on `PULL` 
 
 
 - Creation of dataflow stream jobs
-  -  script for reading JSON encoded messages from Pub/Sub, transforming the message data and writing the results to BigQuery: `scripts/dataflow_stream.py` 
-
+  - run pip3 install apache-beam apache-beam[gcp] 
+  -  Check `scripts/dataflow_stream.py`: script for reading JSON encoded messages from Pub/Sub, transforming the message data and writing the results to BigQuery
+  -  Get credentials, in CLI: `gloud config list`
+  -  Set credentials: export GOOGLE_APPLICATION_CREDENTIALS="/home/ubuntu/z_vscode_p/Data_Engineer_ZoomCamp/week_7_project/credentials/yelp-zoomcamp-de-83864d05c153.json"
+  -  run dataflow stream job from CLI:   
+        `python3 scripts/dataflow_stream.py --input_subscription=projects/yelp-zoomcamp-de/subscriptions/gcp-topic-yelp-sub --output_table=test.yelp_covid -- output_error_table=test.error --runner DataflowRunner --project yelp-zoomcamp-de --region
+        us-west1 --service_account_email unegouttedeweb@gmail.com --
+        staging_location gs://gcp-file-source/dataflow/staging --temp_location gs://gcp-file-
+        source/dataflow/temp --job_name test-stream-bq --num_workers 1 --max_num_workers 2`
 
 <br><br>
 ## **Transformations**
