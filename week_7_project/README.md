@@ -41,19 +41,26 @@ In the dataset you'll find information about businesses across 11 metropolitan a
 
 ### **Steps**
 
-~~~
-(look snapshots folders img/1_project_service_account)
-~~~
+
+> look snapshots folder `img/1_project_service_account`
+
 - Creating a Project : `Yelp-Zoomcamp-DE`
 - Creating Service account and setting of Cloud SDK
   - Enable `service account API` first
   - Create new `servive account`
     - name
     - role : `editor`
+
+
   - Create `keys` for new service account
     - Select the new service account
     - Click on `KEYS` option
     - Create a `new key` with key type `JSON` and save it (`credentials` folder)
+    - Configure service account with google cloud SDK:
+        run `gcloud auth activate-service-account  yelp-sa-rw@yelp-zoomcamp-de.iam.gserviceaccount.com  --key-file=/home/ubuntu/z_vscode_p/Data_Engineer_ZoomCamp/week_7_project/credentials/yelp-zoomcamp-de-99dcbf327104.json --project=yelp-zoomcamp-de`
+
+
+
   - Install and setting of Cloud SDK -> [link](https://cloud.google.com/sdk/docs/install?hl=en)
 
 <br><br>
@@ -67,9 +74,8 @@ In the dataset you'll find information about businesses across 11 metropolitan a
   - [yelp_academic_dataset_covid_features](https://www.dropbox.com/s/y6ac1lpu7ayezlj/yelp_academic_dataset_covid_features.json)
   - via CLI check nb of lines(go to `yelp_dataset` folder):  `cat yelp_academic_dataset_covid_features.json | wc -l`
 
-~~~
-(look snapshots folders img/2_gcs_bucket)
-~~~
+<br>
+> look snapshots folder `img/2_gcs_bucket`
 
 -  Creating Cloud bucket 
    -  via web interface :`Cloud Storage` -> `CREATE BUCKET` 
@@ -86,16 +92,14 @@ In the dataset you'll find information about businesses across 11 metropolitan a
 - Creation of Dataflow Batch Job and Execution
   -  Check `scripts/dataflow_batch_test.py`: It reads JSON encoded messages from GCS file, transforms the message data and writes the results to BigQuery
   -  run dataflow batch job from CLI:
-    `python3 scripts/dataflow_batch_test.py --input_path=gs://gcs-bucket-yelp/data/* --table=test.business --error_table=test.error --runner DataflowRunner --project yelp-zoomcamp-de --region us-west1 --service_account_email unegouttedeweb@gmail.com --staging_location gs://gcs-bucket-yelp/dataflow/staging --temp_location gs://gcs-bucket-yelp/dataflow/temp --job_name test-batch-bq --num_workers 1 --max_num_workers 4`
+    `python3 scripts/dataflow_batch_test.py --input_path=gs://gcs-bucket-yelp/data/* --table=test.business --error_table=test.error --runner DataflowRunner --project yelp-zoomcamp-de --region us-west1 --service_account_email yelp-sa-rw@yelp-zoomcamp-de.iam.gserviceaccount.com --staging_location gs://gcs-bucket-yelp/dataflow/staging --temp_location gs://gcs-bucket-yelp/dataflow/temp --job_name test-batch-bq --num_workers 1 --max_num_workers 4`
 
 
 <br>
 
 ### **Stream**
 
-~~~
-(look snapshots folders img/3_stream)
-~~~
+> look snapshots folder `img/3_stream`
 
 
 - Creating PubSub topic subscription
@@ -120,9 +124,10 @@ In the dataset you'll find information about businesses across 11 metropolitan a
   -  Get credentials, in CLI: `gloud config list`
   -  Set credentials: export GOOGLE_APPLICATION_CREDENTIALS="/home/ubuntu/z_vscode_p/Data_Engineer_ZoomCamp/week_7_project/credentials/yelp-zoomcamp-de-83864d05c153.json"
   -  run dataflow stream job from CLI:   
-        `python3 scripts/dataflow_stream.py --input_subscription=projects/yelp-zoomcamp-de/subscriptions/gcp-topic-yelp-sub --output_table=test.yelp_covid --output_error_table=test.error --runner DataflowRunner --project yelp-zoomcamp-de --region us-west1 --service_account_email unegouttedeweb@gmail.com --staging_location gs://gcs-bucket-yelp/dataflow/staging --temp_location gs://gcs-bucket-yelp/dataflow/temp --job_name test-stream-bq --num_workers 1 --max_num_workers 2`
+        `python3 scripts/dataflow_stream.py --input_subscription=projects/yelp-zoomcamp-de/subscriptions/gcp-topic-yelp-sub --output_table=test.yelp_covid --output_error_table=test.error --runner DataflowRunner --project yelp-zoomcamp-de --region us-west1 --service_account_email yelp-sa-rw@yelp-zoomcamp-de.iam.gserviceaccount.com --staging_location gs://gcs-bucket-yelp/dataflow/staging --temp_location gs://gcs-bucket-yelp/dataflow/temp --job_name test-stream-bq --num_workers 1 --max_num_workers 2`
 
 <br><br>
+
 ## **Transformations**
 
 
