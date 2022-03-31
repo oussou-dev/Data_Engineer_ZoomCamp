@@ -37,6 +37,16 @@ In the dataset you'll find information about businesses across 11 metropolitan a
 - Yelp dataset JSON streams are published to Google PubSub which is used for real-time ingestion or streaming datasets
 
 <br><br>
+
+
+
+## **Data Architecture Design**
+
+![](https://github.com/oussou-dev/Data_Engineer_ZoomCamp/blob/main/week_7_project/img/archi_design_def.png)
+
+
+<br><br>
+
 ## **Cloud**
 
 ### **Provider**
