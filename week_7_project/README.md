@@ -45,7 +45,7 @@ In the dataset you'll find information about businesses across 11 metropolitan a
 ### **Steps**
 
 
-> look snapshots folder [img/1_project_service_account](week_7_project/img/1_project_service_account](https://github.com/oussou-dev/Data_Engineer_ZoomCamp/blob/main/week_7_project/img/1_project_service_account/)
+> look snapshots folder [img/1_project_service_account](https://github.com/oussou-dev/Data_Engineer_ZoomCamp/blob/main/week_7_project/img/1_project_service_account/)
 
 - Creating a Project : `Yelp-Zoomcamp-DE`
 - Creating Service account and setting of Cloud SDK
