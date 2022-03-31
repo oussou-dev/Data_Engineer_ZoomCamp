@@ -1,5 +1,8 @@
 # **Project**
 
+<br>
+
+
 ## **Problem description** 
 
 ### **Intro**
@@ -75,23 +78,28 @@ In the dataset you'll find information about businesses across 11 metropolitan a
   - via CLI check nb of lines(go to `yelp_dataset` folder):  `cat yelp_academic_dataset_covid_features.json | wc -l`
 
 <br>
+
 > look snapshots folder `img/2_gcs_bucket`
 
 -  Creating Cloud bucket 
    -  via web interface :`Cloud Storage` -> `CREATE BUCKET` 
+
    -  via CLI : `gsutil  mb gs://gcs-bucket-yelp`
+
    -  list all buckets via CLI : `gsutil ls`
   
 
 - and transferring data to Cloud bucket
   - via web interface : `gcs-bucket-yelp` -> `CREATE FOLDER` (name: data)-> `UPLOAD FILES` 
+
   - via CLI : (in `yelp_dataset` folder) `gsutil cp  yelp_academic_dataset_business.json gs://gcs-bucket-yelp/data/` or `gsutil cp *.json gs://gcs-bucket-yelp/data/`
 
 
 
 - Creation of Dataflow Batch Job and Execution
   -  Check `scripts/dataflow_batch_test.py`: It reads JSON encoded messages from GCS file, transforms the message data and writes the results to BigQuery
-  -  run dataflow batch job from CLI:
+
+  -  run dataflow batch job from CLI: (replace options with your own parameters)
     `python3 scripts/dataflow_batch_test.py --input_path=gs://gcs-bucket-yelp/data/* --table=test.business --error_table=test.error --runner DataflowRunner --project yelp-zoomcamp-de --region us-west1 --service_account_email yelp-sa-rw@yelp-zoomcamp-de.iam.gserviceaccount.com --staging_location gs://gcs-bucket-yelp/dataflow/staging --temp_location gs://gcs-bucket-yelp/dataflow/temp --job_name test-batch-bq --num_workers 1 --max_num_workers 4`
 
 
@@ -111,7 +119,9 @@ In the dataset you'll find information about businesses across 11 metropolitan a
 
 - and publishing messages (to the topic)
   - run `pip3 install --upgrade google-auth --upgrade protobuf`
+
   - run `python3 scripts/publish_messages.py --config_path=config/publish_config.ini`
+
   - check:
     - in CLI: `cat yelp_dataset/yelp_academic_dataset_covid_features.json | wc -l` => 209795
     - in web interface: `Cloud Pub/Sub` -> `gcp-topic-yelp` -> `SUBSCRIPTIONS` -> `gcp-topic-yelp-sub` -> `OVERVIEW` => Unacked message count = 209795
@@ -120,19 +130,30 @@ In the dataset you'll find information about businesses across 11 metropolitan a
 
 - Creation of dataflow stream jobs
   - run pip3 install apache-beam apache-beam[gcp] 
+
   -  Check `scripts/dataflow_stream.py`: script for reading JSON encoded messages from Pub/Sub, transforming the message data and writing the results to BigQuery
+
   -  Get credentials, in CLI: `gloud config list`
+
   -  Set credentials: export GOOGLE_APPLICATION_CREDENTIALS="/home/ubuntu/z_vscode_p/Data_Engineer_ZoomCamp/week_7_project/credentials/yelp-zoomcamp-de-83864d05c153.json"
-  -  run dataflow stream job from CLI:   
+
+  -  run dataflow stream job from CLI:  (replace options with your own parameters) 
         `python3 scripts/dataflow_stream.py --input_subscription=projects/yelp-zoomcamp-de/subscriptions/gcp-topic-yelp-sub --output_table=test.yelp_covid --output_error_table=test.error --runner DataflowRunner --project yelp-zoomcamp-de --region us-west1 --service_account_email yelp-sa-rw@yelp-zoomcamp-de.iam.gserviceaccount.com --staging_location gs://gcs-bucket-yelp/dataflow/staging --temp_location gs://gcs-bucket-yelp/dataflow/temp --job_name test-stream-bq --num_workers 1 --max_num_workers 2`
 
 <br><br>
 
 ## **Transformations**
 
+- Creation of Google Cloud composer instance
 
+
+<br><br>
 
 ## **Data warehouse**
 
+- Querying and Visualisation of data in Google BigQuery
+
+
+<br><br>
 
 ## **Dashboard**
