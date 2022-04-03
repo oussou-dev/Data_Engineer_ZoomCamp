@@ -153,18 +153,35 @@ In the dataset you'll find information about businesses across 11 metropolitan a
 
 <br><br>
 
-## **Transformations**
+## **Transformations & Data warehouse**
 
 - Creation of Google Cloud composer instance
 
+> look snapshots folder [img/4_composer_airflow](https://github.com/oussou-dev/Data_Engineer_ZoomCamp/blob/main/week_7_project/img/4_composer_airflow/)
+
+
+- Creating cloud composer instance
+  - Enable `Cloud Composer API` first
+  - Select `Cloud Composer` and Click on `Create environment` via web interface
+  - Check tab `ENVIRONMENT CONFIGURATION`
+    - DAGS folder
+    - Airflow web UI
+
+-  Scheduling or manually runnng a job from a Google Cloud Composer instance
+   -  Creating a template of our data flows jobs: check `scripts/dataflow_batch_templated.py`: script for reading JSON encoded messages from GCS file, transforms the message data and writes the results to BigQuery
+
+  -  Create Batch Dataflow Job Template from CLI: (replace options with your own parameters)
+      `python3 scripts/dataflow_batch_templated.py --runner DataflowRunner --project yelp-zoomcamp-de --region us-west1 --staging_location gs://gcs-bucket-yelp/dataflow/staging --temp_location gs://gcs-bucket-yelp/dataflow/temp --num_workers 1 --max_num_workers 6 --template_location gs://gcs-bucket-yelp/batchtemplate --save_main_session True`
+
+
+  - Creating dags and scheduling in Cloud Composer API
+    - check `scripts/template_batch_dag.py`: dag which will be deployed on cloud composer for running batch jobs
 
 <br><br>
 
-## **Data warehouse**
-
-- Querying and Visualisation of data in Google BigQuery
-
-
-<br><br>
 
 ## **Dashboard**
+
+> look snapshots folder [img/5_dashboard](https://github.com/oussou-dev/Data_Engineer_ZoomCamp/blob/main/week_7_project/img/5_dashboard/)
+
+- Querying and Visualisation of data in Google BigQuery
