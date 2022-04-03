@@ -206,7 +206,7 @@ class DataflowOptions(PipelineOptions):
     '''@classmethod
     def _add_argparse_args(cls, parser):
         parser.add_value_provider_argument(
-        '--input_path', type=str,default='gs://gcp-file-source/data1/*',
+        '--input_path', type=str,default='gcs-bucket-yelp/data1/*',
         help='Input GCS path from where files will be read.')
         parser.add_value_provider_argument(
             '--table', type=str,default='test.business',
